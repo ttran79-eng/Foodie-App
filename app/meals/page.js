@@ -2,9 +2,16 @@ import classes from './page.module.css';
 import Link from 'next/link';
 import MealsGrid from '@/components/meals/meals-grid';
 import { getMeals } from '@/lib/meals';
+import { Suspense } from 'react';
 
-export default async function MealsPage(){
+async function Meals(){
     const meals = await getMeals();
+    // Isolates the meal portion of the page so when loading, page will display everything that doesn't need to be loaded first...
+    return <MealsGrid meals={meals} />
+}
+
+export default function MealsPage(){
+    
 
     return(
         <>
@@ -21,7 +28,10 @@ export default async function MealsPage(){
             </header>
 
             <main className={classes.main}>
-                <MealsGrid meals={meals} />
+                {/*The code below will only have the loading feature */}
+                <Suspense fallback={<p className={classes.loading}>Fetching meals...</p>}> 
+                    <Meals />
+                </Suspense>
             </main>
         </>
     )
