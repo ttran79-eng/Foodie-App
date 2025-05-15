@@ -3,6 +3,7 @@
 import classes from './page.module.css';
 import Image from 'next/image';
 import { getMeal } from '@/lib/meals';
+import { notFound } from 'next/navigation';
 
 
 // Slug pages get access to params which contains and object key value
@@ -10,6 +11,12 @@ import { getMeal } from '@/lib/meals';
 
 export default function MealsDetailPage({params}){
     const meal = getMeal(params.mealSlug)
+    
+// Error handling when a meal is not found in the database
+    if (!meal){
+        notFound();
+    }
+
     meal.instructions = meal.instructions.replace(/\n/g, '<br />');
     
     return(
