@@ -4,6 +4,11 @@ import MealsGrid from '@/components/meals/meals-grid';
 import { getMeals } from '@/lib/meals';
 import { Suspense } from 'react';
 
+export const metadata = {
+  title: 'All Meals',
+  description: 'Browse the delicious meals by our vibrant community!',
+};
+
 async function Meals(){
     const meals = await getMeals();
     // Isolates the meal portion of the page so when loading, page will display everything that doesn't need to be loaded first...
