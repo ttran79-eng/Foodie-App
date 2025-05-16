@@ -8,10 +8,23 @@ import { notFound } from 'next/navigation';
 
 // Slug pages get access to params which contains and object key value
 // Params.mealSlug is the identifier to fetch details 
+export async function generateMetadata({ params }){
+    const meal = getMeal(params.mealSlug);
 
+        if (!meal){
+        notFound();
+    }
+    
+    return(
+        {
+            title: meal.title,
+            description: meal.summary,
+        }
+    )
+}
 export default function MealsDetailPage({params}){
     const meal = getMeal(params.mealSlug)
-    
+
 // Error handling when a meal is not found in the database
     if (!meal){
         notFound();
